@@ -1,6 +1,11 @@
 console.log("ROCK-PAPER-SCISSORS to the game");
-let player1 = prompt("Take between Rock, Paper, Scissors: ");
-let player2= prompt("Take between Rock, Paper, Scissors: ");
+function getHumanChoice () {
+   return prompt("Take between Rock, Paper, Scissors: ");
+} 
+let humanScore = Number(localStorage.getItem("humanScore"))||0;
+let computerScore =Number(localStorage.getItem("computerScore"))||0;
+let countDraw = Number(localStorage.getItem("countDraw"))||0;
+//let player2= prompt("Take between Rock, Paper, Scissors: ");
 // function rps(player1,player2){
 //     if(player1.includes("Rock")&&player2.includes("Paper")){
 //         return `Player 2 won because Player1 chooses ${player1} and Player2 chooses ${player2}`;
@@ -24,19 +29,56 @@ let player2= prompt("Take between Rock, Paper, Scissors: ");
 //         return "Invalid Text";
 //     }
 // }
-function rps(player1,player2){
-p1 = player1.toLowerCase();
-p2 = player2.toLowerCase();
-const rules = {
-    rock:"scissors",
-    scissors:"paper",
-    paper:"rock",
+function getComputerChoice(){
+ const key ={
+    0 : "rock",
+    1 : "paper",
+    2 : "scissors"
+ }
+ const randomNumber = Math.floor(Math.random()*3);
+ return key[randomNumber];
 }
-if(!rules[p1] || !rules[p2]){
-    return Invalid;
-};
-if(p1 == p2) return "Draw";
 
-return rules[p1] === p2 ? "Player 1 wins" : "Player2 wins";
+function playRound(humanSelection, computerSelection) {
+    const p1 = humanSelection.toLowerCase();
+
+    const rules = {
+        rock: "scissors",
+        paper: "rock",
+        scissors: "paper"
+    };
+
+    console.log(`Human: ${p1}`);
+    console.log(`Computer: ${computerSelection}`);
+
+    if (p1 === computerSelection) {
+        countDraw++;
+        console.log("Draw");
+
+       
+    }
+
+    if (rules[p1] === computerSelection) {
+        humanScore++;
+        console.log("Human wins!");
+    } else {
+        computerScore++;
+        console.log("Computer wins!");
+    }
+
+    console.log(`Human Score: ${humanScore}`);
+    console.log(`Computer Score: ${computerScore}`);
 }
- console.log(rps(player1,player2));
+for (let i = 1; i <= 5; i++) {
+    console.log(`Round ${i}`);
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+
+    playRound(humanSelection, computerSelection);
+}
+console.log("Final Score");
+localStorage.setItem("humanScore", humanScore);
+localStorage.setItem("computerScore", computerScore);
+localStorage.setItem("countDraw",countDraw);
+
+// console.log(getComputerChoice());
