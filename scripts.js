@@ -50,12 +50,14 @@ function playRound(humanSelection, computerSelection) {
 
     console.log(`Human: ${p1}`);
     console.log(`Computer: ${computerSelection}`);
-
+    if(!rules[p1]){
+        console.log("invalid");
+        return 
+    } ;
     if (p1 === computerSelection) {
         countDraw++;
-        console.log("Draw");
-
-       
+        console.log("Draw"); 
+        return   
     }
 
     if (rules[p1] === computerSelection) {
@@ -68,6 +70,7 @@ function playRound(humanSelection, computerSelection) {
 
     console.log(`Human Score: ${humanScore}`);
     console.log(`Computer Score: ${computerScore}`);
+    console.log(`Draw: ${countDraw}`);
 }
 for (let i = 1; i <= 5; i++) {
     console.log(`Round ${i}`);
@@ -75,8 +78,16 @@ for (let i = 1; i <= 5; i++) {
     const computerSelection = getComputerChoice();
 
     playRound(humanSelection, computerSelection);
+   
 }
-console.log("Final Score");
+
+ 
+console.log("Final");
+if(humanScore > computerScore){
+        console.log("Human Won") ;
+    }else{
+        console.log("Computer Won") ;
+    }
 localStorage.setItem("humanScore", humanScore);
 localStorage.setItem("computerScore", computerScore);
 localStorage.setItem("countDraw",countDraw);
